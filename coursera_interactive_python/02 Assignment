@@ -1,0 +1,93 @@
+# http://codeskulptor.appspot.com/save/
+
+""" Assignement of Week 2 - Guess the Number """
+
+import random
+import math
+import simplegui
+
+""" 
+You will interact with your program using an input field and 
+several buttons. For this project, we will ignore the canvas and print the 
+computer's responses in the console. Building an initial version of your 
+project that prints information in the console is a development strategy 
+that you should use in later projects as well. Focusing on getting the logic 
+of the program correct before trying to make it display the information in 
+some “nice” way on the canvas usually saves lots of time since debugging 
+logic errors in graphical output can be tricky.
+"""
+
+
+""" Initialize global variables """
+num_range = 100
+secret_number = random.randrange(0, num_range)
+guesses_remain = 7
+
+""" Helper function to start and restart the game """
+
+def new_game():
+    global num_range
+    global secret_number
+    global guesses_remain
+    # remove this when you add your code    
+    return ()
+    
+
+
+""" Event handlers for control panel """
+
+# Handler for top button for a range of 0-100
+def range100():
+    global num_range
+    global secret_number 
+    global guesses_remain
+    secret_number = random.randrange(0, num_range)
+    print "New Game! Range is from 0 - 100"
+    return ()
+
+
+# Handler for lower button for a range of 0-1000
+def range1000():
+    # button that changes the range to [0,1000) and starts a new game     
+    global num_range
+    num_range = 1000
+    global secret_number 
+    secret_number = random.randrange(0, num_range)
+    global guesses_remain
+    guesses_remain = 10
+    print "New Game! Range is from 0 - 1000"
+    return ()
+
+
+#  Handler for input field
+def input_guess(text):
+    global secret_number
+    global guesses_remain
+    guesses_remain = guesses_remain - 1
+    guess = int(text)
+    print "Guess was ", guess
+    print "Number of remaining guesses is ", guesses_remain
+    # main game logic goes here 
+    if guess < secret_number:
+        print "Higher!"
+    elif guess > secret_number:
+        print "Lower!" 
+    elif guess == secret_number:
+        print "Correct!"
+    else:
+        print "None"
+    print " "
+
+        
+""" Create frame """
+f = simplegui.create_frame("Guess the number", 200, 200)
+
+
+""" Register event handlers for control elements and start frame """
+f.add_button("Range is [0,100)", range100, 200)
+f.add_button("Range is [0,1000)", range1000, 200)    
+f.add_input("Enter a guess", input_guess, 200)
+
+
+""" Call frame/new game """
+new_game()
