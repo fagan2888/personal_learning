@@ -14,7 +14,18 @@ J = 0;
 %               You should set J to the cost.
 
 
+% function J = costFunctionJ(X, y, theta)
 
+% X is the "design matrix" containing our traingin examples.
+% y is the class labels
+
+m = size(X, 1);			% nb of training examples
+predictions = X*theta;	% predictions of hypothesis on all m examples
+
+sqrErrors = (predictions-y) .^2;	% squared errors
+
+
+J = 1/(2*m) * sum(sqrErrors);
 
 
 % =========================================================================
