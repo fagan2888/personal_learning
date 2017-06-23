@@ -1,11 +1,11 @@
 {
     "name": "Lab 0",
-    "endpoint": "cal/cs61a/su17/lab00",
+    "endpoint": "cal/cs61a/fa16/lab00",
     "src": [
         "lab00.py"
     ],
     "tests": {
-        "lab00.py:twenty_seventeen": "doctest"
+        "lab00.py:twenty_sixteen": "doctest"
     },
     "protocols": [
         "restore",
