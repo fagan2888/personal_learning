@@ -7,6 +7,12 @@ def multiple(a, b):
     42
     """
     "*** YOUR CODE HERE ***"
+    a_mul = [a * i for i in range(2, 100)]
+    b_mul = [b * i for i in range(2, 100)]
+    inter = set(a_mul).intersection(b_mul)
+
+    return min(inter)
+    
 
 def unique_digits(n):
     """Return the number of unique digits in positive integer n
@@ -25,3 +31,9 @@ def unique_digits(n):
     2
     """
     "*** YOUR CODE HERE ***"
+    # l = str(n).split("")
+    l = list(str(n))
+    s = set(l)
+    
+    return len(s)
+    
