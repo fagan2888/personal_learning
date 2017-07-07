@@ -1,5 +1,8 @@
 HW_SOURCE_FILE = 'hw02.py'
 
+from operator import mul
+from functools import reduce
+
 def square(x):
     return x * x
 
@@ -28,6 +31,17 @@ def product(n, term):
     14400
     """
     "*** YOUR CODE HERE ***"
+    l = [term(i) for i in range(1, n+1)]
+    
+    # Method 1
+    # return reduce(mul, l)
+    
+    # Method 2
+    r = 1
+    for x in l:
+        r *= x
+    return r 
+
 
 # The identity function, defined using a lambda expression!
 identity = lambda k: k
@@ -44,7 +58,9 @@ def factorial(n):
     True
     """
     "*** YOUR CODE HERE ***"
-    return _______
+    assert n >= 0, 'n must be positive'
+    return product(n, identity)
+
 
 def make_adder(n):
     """Return a function that takes an argument K and returns N + K.
@@ -56,4 +72,4 @@ def make_adder(n):
     3
     """
     "*** YOUR CODE HERE ***"
-    return lambda ________________
+    return lambda k: k + n
