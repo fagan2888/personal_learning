@@ -19,18 +19,95 @@ def roll_dice(num_rolls, dice=six_sided):
     assert type(num_rolls) == int, 'num_rolls must be an integer.'
     assert num_rolls > 0, 'Must roll at least once.'
     # BEGIN PROBLEM 1
-    "*** REPLACE THIS LINE ***"
+    outcomes = [dice() for _ in range(num_rolls)]
+    ones = [o for o in outcomes if o == 1]
+    if len(ones) > 0:
+        return len(ones)
+    else:
+        return sum(outcomes)
     # END PROBLEM 1
 
 
 def free_bacon(opponent_score):
-    """Return the points scored from rolling 0 dice (Free Bacon)."""
+    """Return the points scored from rolling 0 dice (Free Bacon):
+
+    >>> free_bacon(42)
+    5
+
+    >>> free_bacon(48)
+    9
+
+    >>> free_bacon(7)
+    8
+
+    """
     # BEGIN PROBLEM 2
-    "*** REPLACE THIS LINE ***"
+    assert opponent_score < 100, 'The game should be over.'
+
+    l = list(str(opponent_score))
+    l2 = [int(i) for i in l]
+    
+    return max(l2) + 1
     # END PROBLEM 2
 
 
 # Write your prime functions here!
+def is_prime(anum):
+    """Return True if num is prime.
+
+    >>> is_prime(1)
+    False
+
+    >>> is_prime(5)
+    True
+
+    >>> is_prime(10)
+    False
+
+    >>> is_prime(2)
+    True
+    
+    """
+    assert type(anum) == int, 'is_prime only takes integer values'
+    
+    l = range(2, anum)
+    l2 = []
+    for i in l:
+        if anum % i == 0:
+            l2.append(i)
+        else:
+            pass
+
+    if anum == 1:
+        return False
+    elif len(l2) < 1:
+        return True
+    else:
+        return False
+
+
+def next_prime(anum):
+    """Return the next prime number after anum.
+
+    >>> next_prime(0)
+    2
+
+    >>> next_prime(2)
+    3
+
+    >>> next_prime(29)
+    31
+    
+    """
+    assert type(anum) == int, 'next_prime only takes integer values'
+
+    n_prime = anum+1
+    if is_prime(n_prime) == True:
+        return n_prime
+    else:
+        while is_prime(n_prime) == False:
+            n_prime += 1
+        return n_prime
 
 
 def take_turn(num_rolls, opponent_score, dice=six_sided):
@@ -48,7 +125,24 @@ def take_turn(num_rolls, opponent_score, dice=six_sided):
     assert num_rolls <= 10, 'Cannot roll more than 10 dice.'
     assert opponent_score < 100, 'The game should be over.'
     # BEGIN PROBLEM 2
-    "*** REPLACE THIS LINE ***"
+    # w/the "Free Bacon" rule
+    if num_rolls == 0:
+        player_score = free_bacon(opponent_score)
+    else:
+        player_score = roll_dice(num_rolls, dice)
+        # print("here now",player_score)
+    
+    # w/the "Hogtimus Prime" rule
+    if is_prime(player_score):
+        player_score = next_prime(player_score)
+    else:
+        player_score = player_score
+
+    # w/the "When Pigs Fly" rule
+    if player_score >= 25:
+        return 25 - num_rolls
+    else:
+        return player_score
     # END PROBLEM 2
 
 
@@ -56,21 +150,26 @@ def reroll(dice):
     """Return dice that return even outcomes and re-roll odd outcomes of DICE."""
     def rerolled():
         # BEGIN PROBLEM 3
-        "*** REPLACE THIS LINE ***"
-        return dice()  # Replace this statement
+        first = dice()
+        if first % 2 == 0:
+            return first
+        else:
+            return dice()  # Replace this statement
         # END PROBLEM 3
     return rerolled
 
 
-def select_dice(score, opponent_score, dice_swapped):
+def select_dice(score, opponent_score, dice_swapped=False):
     """Return the dice used for a turn, which may be re-rolled (Hog Wild) and/or
     swapped for four-sided dice (Pork Chop).
 
     DICE_SWAPPED is True if and only if four-sided dice are being used.
     """
     # BEGIN PROBLEM 4
-    "*** REPLACE THIS LINE ***"
-    dice = six_sided  # Replace this statement
+    if dice_swapped == False:
+        dice = six_sided  # Replace this statement
+    else:
+        dice = four_sided
     # END PROBLEM 4
     if (score + opponent_score) % 7 == 0:
         dice = reroll(dice)
@@ -104,7 +203,49 @@ def play(strategy0, strategy1, score0=0, score1=0, goal=GOAL_SCORE):
     player = 0  # Which player is about to take a turn, 0 (first) or 1 (second)
     dice_swapped = False  # Whether 4-sided dice have been swapped for 6-sided
     # BEGIN PROBLEM 5
-    "*** REPLACE THIS LINE ***"
+    
+    def score_update(player, score):
+        nonlocal score0, score1
+        if player == 0:
+            score0 = score0 + score
+        else:
+            score1 = score1 + score
+
+    def get_score(player):
+        # nonlocal score0, score1
+        if player == 0:
+            return score0
+        else:
+            return score1
+    
+    def player_strategy(player):
+        if player  == 0:
+            return strategy0
+        else:
+            return strategy1
+
+    # Add "Swine Swap" rule
+    def swine_swap_rule():
+        nonlocal score0, score1
+        if score0 == (2*score1) or score1 == (2*score0):
+            score0, score1 = score1, score0
+
+    # Game progress
+    while score0 < goal and score1 < goal:
+        # Current score
+        player_score_this_round = get_score(player)
+        opponent_score_this_round = get_score(other(player))
+        # Get strategy / num of rolls
+        num_rolls = player_strategy(player)(player_score_this_round, opponent_score_this_round)
+        # Dice
+        dice = select_dice(player_score_this_round, opponent_score_this_round, dice_swapped)
+        # Update score
+        score_update(player, take_turn(num_rolls, opponent_score_this_round, dice=dice))
+        # Does the Swin Swap rule apply
+        swine_swap_rule()
+        # Change player turn
+        player = other(player)
+
     # END PROBLEM 5
     return score0, score1
 
@@ -182,7 +323,15 @@ def check_strategy(strategy, goal=GOAL_SCORE):
     AssertionError: strategy(102, 115) returned 100 (invalid number of rolls)
     """
     # BEGIN PROBLEM 6
-    "*** REPLACE THIS LINE ***"
+    assert strategy is not None, ' strategy not defined'
+
+    score0 = 0
+    while score0 < goal:
+        score1 = 0
+        while score1 < goal:
+            check_strategy_roll(score0, score1, strategy(score0, score1))
+            score1 += 1
+        score0 += 1
     # END PROBLEM 6
 
 

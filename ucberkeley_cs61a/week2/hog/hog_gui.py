@@ -368,7 +368,8 @@ def run(*args):
                              'Computer alternates playing as player 0 and 1.',
                         action='store_true')
     parser.add_argument('-d', '--delay',
-                        help='time delay for computer, in seconds', type=int,
+                        help='time delay for computer, in seconds', 
+                        type=int,
                         default=2)
     args = parser.parse_args()
     global DELAY

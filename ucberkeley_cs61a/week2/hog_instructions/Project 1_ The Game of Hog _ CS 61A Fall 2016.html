@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<!-- saved from url=(0067)https://inst.eecs.berkeley.edu/~cs61a/fa16/proj/hog/#problem-6-1-pt -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="description" content="CS61A: Structure and Interpretation of Computer Programs">
+    <meta name="keywords" content="CS61A, Computer Science, CS, 61A, Programming, John DeNero, Berkeley, EECS">
+    <meta name="author" content="John DeNero, Albert Chen, Anna (Zhining) Zhu, Cale Horeff, Christopher Le, Colin Schoen, David Harrison, Emily Tsai, Eric Bo, Eric Nelson, Eric Pai, Eurie Oh, Garrett Tan, Giorgia Willits, Haojun Li, Jack Thakar, James Uejio, Jerry Chen, Jongmin Baek, Jordon Wing, Katya Stukalova, Kavi Gupta, Kelly Liu, Kevin Chen, Kevin Lin, Kunal Munshani, Kyle Liang, Kyle Raftogianis, Manas Agrawal, Michael Dong, Michelle Tian, Mitas Ray, Nicole Rasquinha, Owen Jow, Peter Xu, Raymond Chan, Richard Liang, Rohit Lalchandani, Ryan Chang, Samantha Wathugala, Samantha Wong, Shea Conlon, Soumik Biswas, Stanfield Chu, Sydney McMuldroch, Tammy Nguyen, Tim Greeno, Vivian Fang, Zhen Qin">
+    
+    <meta name="viewport" content="width=device-width">
+
+    <script src="./Project 1_ The Game of Hog _ CS 61A Fall 2016_files/jquery.min.js"></script>
+    <script src="./Project 1_ The Game of Hog _ CS 61A Fall 2016_files/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="./Project 1_ The Game of Hog _ CS 61A Fall 2016_files/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./Project 1_ The Game of Hog _ CS 61A Fall 2016_files/style.css">
+    <link rel="icon" href="https://inst.eecs.berkeley.edu/~cs61a/fa16/assets/images/favicon.ico">
+
+    <link rel="stylesheet" href="./Project 1_ The Game of Hog _ CS 61A Fall 2016_files/mono-blue.css">
+    <script src="./Project 1_ The Game of Hog _ CS 61A Fall 2016_files/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+
+
+<link rel="stylesheet" type="text/css" href="./Project 1_ The Game of Hog _ CS 61A Fall 2016_files/resource.css">
+
+<link href="./Project 1_ The Game of Hog _ CS 61A Fall 2016_files/project.css" rel="stylesheet" type="text/css">
+
+
+    <title>
+Project 1: The Game of Hog | CS 61A Fall 2016
+</title>
+
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="https://inst.eecs.berkeley.edu/~cs61a/fa16/">CS 61A</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/articles/about.html">Syllabus</a></li>
+            <li><a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/articles/resources.html">Resources</a></li>
+            <li><a href="https://piazza.com/berkeley/fall2016/cs61a">Piazza</a></li>
+            <li><a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/office-hours.html">Office Hours</a></li>
+            <li><a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/weekly.html">Weekly Schedule</a></li>
+            <li><a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/staff.html">Staff</a></li>
+            <!--- <li><a href="/~cs61a/fa16/articles/using-ok.html">Using OK</a></li> -->
+            <!-- Not used, but leaving these for the future. -->
+            <!--- <li><a href="https://inst.eecs.berkeley.edu/~cs61a/admin-sp16/cgi-bin/calnet-auth.cgi">Account Login</a></li> -->
+            <!---
+            <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Course Info <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="/~cs61a/fa16/articles/resources.html">Resources</a></li>
+              <li><a href="/~cs61a/fa16/staff.html">Staff</a></li>
+              <li><a href="/~cs61a/fa16/weekly.html">Weekly Schedule</a></li>
+            </ul>
+            </li>
+            -->
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div id="content" class="container">
+      
+
+<div class="row">
+  <div class="col-md-9">
+    <div class="page-header">
+      <h1>
+<span class="content-title-brand">Project 1</span>: The Game of Hog
+</h1>
+    </div>
+
+    
+<div class="haiku">
+  <blockquote><p><img class="img-responsive center-block" src="./Project 1_ The Game of Hog _ CS 61A Fall 2016_files/die5.gif" alt="5-sided die"></p>
+
+<cite>
+  I know! I'll use my<br>
+  Higher-order functions to<br>
+  Order higher rolls.
+</cite></blockquote>
+</div>
+
+
+    
+<h2>Introduction</h2>
+<p>In this project, you will develop a simulator and multiple strategies
+for the dice game Hog. You will need to use <em>control statements</em> and
+<em>higher-order functions</em> together, as described in Sections 1.2 through
+1.6 of <a href="http://composingprograms.com/">Composing Programs</a>.</p>
+
+<p>In Hog, two players alternate turns trying to be the first to end a turn with
+at least 100 total points. On each turn, the current player chooses some number
+of dice to roll, up to 10. That player's score for the turn is the sum of the
+dice outcomes.</p>
+
+<p>To spice up the game, we will play with some special rules:</p>
+
+<ul>
+  <li><strong>Pig Out</strong>. If any of the dice outcomes is a 1, the current player's score
+  for the turn is the number of 1's rolled.</li>
+  <li><p><strong>Free Bacon</strong>. A player who chooses to roll zero dice scores one more
+  than the largest digit in the opponent's total score.</p>
+
+  <ul>
+    <li><em>Example 1</em>: If the opponent has 42 points, the current player gains 1 +
+    max(4, 2) = 5 points by rolling zero dice.</li>
+    <li><em>Example 2</em>: If the opponent has 48 points, the current player gains
+    1 + max(4, 8) = 9 points by rolling zero dice.</li>
+    <li><em>Example 3</em>: If the opponent has 7 points, the current player gains
+    1 + max(0, 7) = 8 points by rolling zero dice.</li>
+  </ul></li>
+  <li><strong>Hogtimus Prime</strong>. If a player's score for the turn is a prime number, then
+  the turn score is increased to the next larger prime number. For example, if
+  the dice outcomes sum to 11, the current player scores 13 points for the turn.
+  This boost only applies to the current player. <em>Note:</em> 1 is not a prime
+  number!</li>
+  <li><p><strong>When Pigs Fly</strong>. The score for a turn is limited to 25 points minus the
+  number of dice rolled.</p>
+
+  <ul>
+    <li><em>Example 1</em>: The current player rolls 10 dice which have a sum total of 35
+    points. The player's score for the turn is 25 - 10 = 15 points.</li>
+    <li><em>Example 2</em>: The current player rolls 5 dice which have a sum total of 19
+    points. Hogtimus Prime bumps the turn score up to 23. However, the
+    player's score for the turn is 25 - 5 = 20 points.</li>
+  </ul></li>
+  <li><p><strong>Hog Wild</strong>. If the sum of both players' total scores is a multiple of seven
+  (e.g., 0, 7, 14, 21, 35), then the current player rolls special re-rolling
+  dice. When re-rolling dice are rolled and the outcome is odd, they are rolled
+  again exactly once.</p>
+
+  <ul>
+    <li><em>Example 1</em>: The scores are 25 and 38 (which sum to 63), and the current
+    player chooses to roll 4 dice. The outcomes are 4, 2, 6, and 2. Because
+    all of the initial outcomes are even, no dice are re-rolled and the current
+    player's score for the turn is 14.</li>
+    <li><em>Example 2</em>: The scores are 58 and 33 (which sum to 91), and the current
+    player chooses to roll 2 dice. The first roll outcome is 1, which is odd,
+    so it is rolled again and comes up 4. The second roll outcome is 5, which
+    is odd, so it is also rolled again and comes up 3. Even though 3 is an odd
+    number, that outcome is kept, since re-rolling dice are only re-rolled
+    once. Thus, the player has a turn score of 7.</li>
+    <li><em>Example 3</em>: The scores are 0 and 0 and the current player chooses to roll
+    3 dice. The dice outcomes are 2, 3, and 4. The 2 and 4 remain the same
+    while the 3 is re-rolled and comes up 1. The player's score for the turn
+    is 1 because of Pig Out.</li>
+  </ul></li>
+  <li><p><strong>Swine Swap</strong>. After the turn score is added, if one of the scores is double
+  the other, then the two scores are swapped.</p>
+
+  <ul>
+    <li><em>Example 1</em>: The current player has a total score of 37 and the opponent
+    has 92. The current player rolls two dice that total 9. The current
+    player's new total score (46) is half of the opponent's score. These
+    scores are swapped! The current player now has 92 points and the opponent
+    has 46. The turn ends.</li>
+    <li><em>Example 2</em>: The current player has 91 and the opponent has 55. The
+    current player rolls five dice that total 17, a prime that is boosted to
+    19 points for the turn. The current player has 110, so the scores are
+    swapped. The opponent ends the turn with 110 and wins the game.</li>
+  </ul></li>
+  <li><strong>Pork Chop</strong>. A player may choose to roll -1 dice, which scores 1 point for
+  the turn, but swaps the normal six-sided dice with four-sided dice for all
+  subsequent turns. The special re-rolling dice are affected by this rule and
+  will become four-sided as well. The odd re-rolling rule will still apply to the
+  four-sided dice. The next time either player rolls -1 dice, the
+  six-sided dice will be swapped back.  Subsequent rolls of -1 dice will
+  continue swapping the dice back and forth.</li>
+</ul>
+
+
+<h2 id="download-starter-files">Download starter files</h2>
+
+
+<p>To get started, download all of the project code as a <a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/proj/hog/hog.zip">zip
+archive</a>. You only have to make changes to <code>hog.py</code>.</p>
+
+<ul>
+  <li><code>hog.py</code>: A starter implementation of Hog</li>
+  <li><code>dice.py</code>: Functions for rolling dice</li>
+  <li><code>hog_gui.py</code>: A graphical user interface for Hog</li>
+  <li><code>ucb.py</code>: Utility functions for CS 61A</li>
+  <li><code>ok</code>: CS 61A autograder</li>
+  <li><code>tests</code>: A directory of tests used by <code>ok</code></li>
+  <li><code>images</code>: A directory of images used by <code>hog_gui.py</code></li>
+</ul>
+
+<h2>Logistics</h2>
+
+<p>This is a 1-week project. You may work with one other
+partner. You should not share your code with students who are not your
+partner or copy from anyone else's solutions.</p>
+
+<p>Remember that you can earn an additional bonus point by submitting the project at least 24 hours before the deadline.</p>
+
+<p>In the end, you will submit one project for both partners. The
+project is worth 20 points. 18 points are
+assigned for correctness, and 2 points for the overall <a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/articles/composition.html">composition</a> of your program.</p>
+
+<p>You will turn in the following files:</p>
+
+<ul>
+  <li><code>hog.py</code></li>
+</ul>
+
+<p>You do not need to modify or turn in any other files to complete the
+project. To submit the project, run the following command:</p>
+
+<pre><code class="hljs">python3 ok --submit</code></pre>
+
+<p>You will be able to view your submissions on the <a href="http://ok.cs61a.org/">OK dashboard</a>.</p>
+
+<p>For the functions that we ask you to complete, there may be some
+initial code that we provide. If you would rather not use that code,
+feel free to delete it and start from scratch. You may also add new
+function definitions as you see fit.</p>
+
+<p>However, please do <b>not</b> modify any other functions.  Doing so may
+result in your code failing our autograder tests. Also, please do not
+change any function signatures (names, argument order, or number of
+arguments).</p>
+
+<h2>Testing</h2>
+
+<p>Throughout this project, you should be testing the correctness of your code.
+It is good practice to test often, so that it is easy to isolate any problems.
+However, you should not be testing <i>too</i> often, to allow yourself and your
+partner the time to think through problems.</p>
+
+<p>We have provided an <b>autograder</b> called <code>ok</code> to help you
+with testing your code and tracking your progress. The first time you run the
+autograder, you will be asked to <b>log in with your OK account using your web
+browser</b>. Please do so. Each time you run <code>ok</code>, it will back up
+your work and progress on our servers.</p>
+
+<p>The primary purpose of <code>ok</code> is to test your implementations, but
+there are two things you should be aware of.</p>
+
+<p>First, some of the test cases are <i>locked</i>. To unlock tests, run the
+following command from your terminal:</p>
+
+<pre><code class="hljs">python3 ok -u</code></pre>
+
+<p>This command will start an interactive prompt that looks like:</p>
+
+<pre>=====================================================================
+Assignment: The Game of Hog
+OK, version ...
+=====================================================================
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Unlocking tests
+
+At each "? ", type what you would expect the output to be.
+Type exit() to quit
+
+---------------------------------------------------------------------
+Question 0 &gt; Suite 1 &gt; Case 1
+(cases remaining: 1)
+
+&gt;&gt;&gt; Code here
+?
+</pre>
+
+<p>At the <code>?</code>, you can type what you expect the output to be. If you
+are correct, then this test case will be available the next time you run the
+autograder.</p>
+
+<p>The idea is to understand <i>conceptually</i> what your program should do
+first, before you start writing any code.</p>
+
+<p>Once you have unlocked some tests and written some code, you can check the
+correctness of your program using the tests that you have unlocked:</p>
+
+<pre>python3 ok</pre>
+
+<p>Most of the time, you will want to focus on a particular question. Use the
+<code>-q</code> option as directed in the problems below.</p>
+
+<!--<p>Second, some of the test cases are <i>hidden</i>. These test cases are-->
+<!--<b>not</b> run by the command:</p>-->
+
+<!--<pre>python3 ok</pre>-->
+
+<!--<p>They are only run when you submit:</p>-->
+
+<!--<pre>python3 ok --submit</pre>-->
+
+<p>We recommend that you submit <b>after you finish each
+problem</b>. Only your last submission will be graded. It is also useful for us
+to have more backups of your code in case you run into a submission issue.</p>
+
+<!--<p>After you run this command, you will receive an email (to the address-->
+<!--that you used to sign up for OK) that has the output from all <i>failed</i>-->
+<!--unlocked tests, including hidden tests, along with your score at the bottom. You-->
+<!--can continue submitting until you pass all the tests. However, you will receive-->
+<!--<b>at most one email every half hour</b>.</p>-->
+
+<!--<p>This buffer period is meant for you and your partner to try and understand-->
+<!--where your error comes from, and take some time to think through your code. We-->
+<!--encourage you to do this for all projects.</p>-->
+
+<!---
+<p>If you are trying to debug a test failure, you can launch an interactive session
+after the test is run with:</p>
+
+<pre><code>python3 ok &#x2d;q 05 &#x2d;i</code></pre>
+
+<p>This will run the tests and launch an interactive session if a test does not
+pass.</p>
+
+<pre><code>=====================================================================
+Assignment: Project 1: Hog
+OK, version ....
+=====================================================================
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Running tests
+
+&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;
+Question ... &gt; Suite ... &gt; Case ...
+
+&gt;&gt;&gt; the_test()
+"expected value"
+
+# Error: expected
+#     "expected value"
+# but got
+#     None
+
+# Interactive console. Type exit() to quit
+&gt;&gt;&gt;</code></pre>
+-->
+
+
+<p>The <code>tests</code> folder is used to store autograder tests, so
+<b>do not modify it</b>. You may lose all your unlocking progress if you
+do. If you need to get a fresh copy, you can download the
+<a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/proj/hog/hog.zip">zip archive</a> and copy it over, but you
+will need to start unlocking from scratch.</p>
+
+<p>If you do not want us to record a backup of your work or information about
+your progress, use the <code>--local</code> option when invoking
+<code>ok</code>.  With this option, no information will be sent to our course
+servers.
+
+</p><h2 id="graphical-user-interface">Graphical User Interface</h2>
+
+
+<p>A <strong>graphical user interface</strong> (GUI, for short) is provided for you.
+At the moment, it doesn't work because you haven't implemented the
+game logic.  Once you complete the <code>play</code> function, you will be able
+to play a fully interactive version of Hog!</p>
+
+<p>In order to render the graphics, make sure you have Tkinter, Python's
+main graphics library, installed on your computer. Once you've done
+that, you can run the GUI from your terminal:</p>
+
+<pre><code class="hljs">python3 hog_gui.py</code></pre>
+
+<p>Once you complete the project, you can play against the final strategy
+that you've created!</p>
+
+<pre><code class="hljs bash">python3 hog_gui.py <span class="hljs-operator">-f</span></code></pre>
+
+
+<h2 id="phase-1-simulator">Phase 1: Simulator</h2>
+
+
+<p>In the first phase, you will develop a simulator for the game of Hog.</p>
+
+
+<h3 id="problem-0-0-pt">Problem 0 (0 pt)</h3>
+
+
+<p>The <code>dice.py</code> file represents dice using non-pure zero-argument
+functions. These functions are non-pure because they may have
+different return values each time they are called. The documentation
+of <code>dice.py</code> describes the two different types of dice used in the
+project:</p>
+
+<ul>
+  <li>Dice can be fair, meaning that they produce each possible outcome with equal
+  probability. Examples: <code>four_sided</code>, <code>six_sided</code>.</li>
+  <li>For testing functions that use dice, deterministic test dice always cycle
+  through a fixed sequence of values that are passed as arguments to the
+  <code>make_test_dice</code> function.</li>
+</ul>
+
+<p>Before we start writing any code, let's understand the <code>make_test_dice</code>
+function by unlocking its tests.</p>
+
+<pre><code class="hljs">python3 ok -q 00 -u</code></pre>
+
+<p>This should display a prompt that looks like this:</p>
+
+<pre><code class="hljs bash">=====================================================================
+Assignment: Project <span class="hljs-number">1</span>: Hog
+OK, version v1.<span class="hljs-number">5.2</span>
+=====================================================================
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Unlocking tests
+
+At each <span class="hljs-string">"? "</span>, <span class="hljs-built_in">type</span> what you would expect the output to be.
+Type <span class="hljs-built_in">exit</span>() to quit
+
+---------------------------------------------------------------------
+Question <span class="hljs-number">0</span> &gt; Suite <span class="hljs-number">1</span> &gt; Case <span class="hljs-number">1</span>
+(cases remaining: <span class="hljs-number">1</span>)
+
+&gt;&gt;&gt; <span class="hljs-built_in">test</span>_dice = make_<span class="hljs-built_in">test</span>_dice(<span class="hljs-number">4</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>)
+&gt;&gt;&gt; <span class="hljs-built_in">test</span>_dice()
+?</code></pre>
+
+<p>You should type in what you expect the output to be. To do so, you
+need to first figure out what <code>test_dice</code> will do, based on the
+description above.</p>
+
+<p>You can exit the unlocker by typing <code>exit()</code> (without quotes). <strong>Typing Ctrl-C
+on Windows to exit out of the unlocker has been known to cause problems, so
+avoid doing so.</strong></p>
+
+
+<h3 id="problem-1-1-pt">Problem 1 (1 pt)</h3>
+
+
+<p>Implement the <code>roll_dice</code> function in <code>hog.py</code>. It takes two arguments: a
+positive integer called <code>num_rolls</code> giving the number of dice to roll and a
+<code>dice</code> function. It returns the number of points scored by rolling the dice that
+number of times in a turn: either the sum of the outcomes or the number of ones
+rolled (<em>Pig Out</em>).</p>
+
+<p>To obtain a single outcome of a dice roll, call <code>dice()</code>. You should call
+<code>dice()</code> exactly <code>num_rolls</code> times in the body of <code>roll_dice</code>.</p>
+
+<p>Before writing any code, unlock the tests to verify your understanding of the question.</p>
+<pre><code class="hljs">python3 ok -q 01 -u</code></pre>
+<p>Once you are done unlocking, begin implementing your solution. You can check your correctness with:</p>
+<pre><code class="hljs">python3 ok -q 01</code></pre>
+
+<p>The <code>roll_dice</code> function has a <a href="http://composingprograms.com/pages/14-designing-functions.html#default-argument-values">default argument value</a>
+for <code>dice</code> that is a random six-sided dice function. The tests use <code>test_dice</code>.</p>
+
+
+<h3 id="problem-2-2-pt">Problem 2 (2 pt)</h3>
+
+
+<p>Implement the <code>take_turn</code> function, which returns the number of points scored
+for a turn by the current player. Your implementation should call <code>roll_dice</code>
+when possible.</p>
+
+<p>You will need to implement the <em>Free Bacon</em> rule. You can assume that
+<code>opponent_score</code> is less than 100. For a score less than 10, assume that the
+first of the two digits is 0. To make your life easier later in the project,
+first implement the <code>free_bacon</code> helper function that returns the number of
+points scored by rolling 0 dice. Call <code>free_bacon</code> in your implementation of
+<code>take_turn</code>.</p>
+
+<p>You will also need to implement the <em>Hogtimus Prime</em> rule, which applies to both
+regular turns and Free Bacon turns! To implement <em>Hogtimus Prime</em>, write your
+own helper functions above the <code>take_turn</code> function. One approach is to write
+two helper functions: <code>is_prime</code> and <code>next_prime</code>. There are no tests for
+<code>is_prime</code> and <code>next_prime</code>, but you can test them on your own using doctests
+that you create. Remember, 1 isn't prime!</p>
+
+<p><em>When Pigs Fly</em> also needs to be implemented in this function! It should be
+applied after the <em>Hogtimus Prime</em> rule takes effect. Remember that <em>When Pigs
+Fly</em> caps the score for a turn, so <code>take_turn</code> should return the minimum of
+<code>25 - num_rolls</code> and the uncapped score for the turn.</p>
+
+<p>Before writing any code, unlock the tests to verify your understanding of the question.</p>
+<pre><code class="hljs">python3 ok -q 02 -u</code></pre>
+<p>Once you are done unlocking, begin implementing your solution. You can check your correctness with:</p>
+<pre><code class="hljs">python3 ok -q 02</code></pre>
+
+
+<h3 id="problem-3-1-pt">Problem 3 (1 pt)</h3>
+
+
+<p>Implement the <code>reroll</code> function, which is a higher-order function that takes a
+<code>dice</code> function and returns a <code>rerolled</code> function. The <code>rerolled</code> function
+should roll the <code>dice</code> and check whether the outcome is even or odd. Any even
+outcome is returned, but any odd outcome is discarded, and the next roll of <code>dice</code> is returned instead.</p>
+
+<p>Before writing any code, unlock the tests to verify your understanding of the question.</p>
+<pre><code class="hljs">python3 ok -q 03 -u</code></pre>
+<p>Once you are done unlocking, begin implementing your solution. You can check your correctness with:</p>
+<pre><code class="hljs">python3 ok -q 03</code></pre>
+
+
+<h3 id="problem-4-1-pt">Problem 4 (1 pt)</h3>
+
+
+<p>Implement the <code>select_dice</code> and function, which picks dice for a turn in a way
+that enforces the <em>Hog Wild</em> and <em>Pork Chop</em> special rules.</p>
+
+<p><code>select_dice</code> takes three arguments: the scores for the current and opposing
+players and whether four-sided dice have been swapped for the usual six-sided
+dice. It returns the dice function to be used in <code>take_turn</code>.</p>
+
+<p>To account for <em>Hog Wild</em>, return <code>reroll(dice)</code> after selecting dice with the
+appropriate number of sides, as provided in the starter code.</p>
+
+<p>Before writing any code, unlock the tests to verify your understanding of the question.</p>
+<pre><code class="hljs">python3 ok -q 04 -u</code></pre>
+<p>Once you are done unlocking, begin implementing your solution. You can check your correctness with:</p>
+<pre><code class="hljs">python3 ok -q 04</code></pre>
+
+
+<h3 id="problem-5-3-pt">Problem 5 (3 pt)</h3>
+
+
+<p>Implement the <code>play</code> function, which simulates a full game of Hog. Players
+alternate turns, each using their respective strategy function (Player 0 uses
+<code>strategy0</code>, etc.), until one of the players reaches the <code>goal</code> score. When the
+game ends, <code>play</code> returns the final total scores of both players, with Player
+0's score first, and Player 1's score second.</p>
+
+<p>Here are some hints:</p>
+
+<ul>
+  <li>You should use the functions you have already written! You will need to call
+  <code>take_turn</code> with all three arguments.</li>
+  <li>Enforce all the remaining special rules: <em>Hog Wild</em>, <em>Pork Chop</em>, and <em>Swine
+  Swap</em>.</li>
+  <li>You can get the number of the other player (either 0 or 1) by calling
+  the provided function <code>other</code>.</li>
+  <li>A <em>strategy</em> is a function that, given a player's score and their opponent's
+  score, returns how many dice the player wants to roll. A strategy function
+  (such as <code>strategy0</code> and <code>strategy1</code>) takes two arguments: scores for the
+  current player and opposing player, which both must be non-negative
+  integers. A strategy function returns the number of dice that the current
+  player wants to roll in the turn. Each strategy function should be called only
+  once per turn. Don't worry about the details of implementing strategies
+  yet. You will develop them in Phase 2.</li>
+</ul>
+
+<p>Before writing any code, unlock the tests to verify your understanding of the question.</p>
+<pre><code class="hljs">python3 ok -q 05 -u</code></pre>
+<p>Once you are done unlocking, begin implementing your solution. You can check your correctness with:</p>
+<pre><code class="hljs">python3 ok -q 05</code></pre>
+
+<blockquote><p>The last test for Question 5 is a <em>fuzz test</em>, which checks that your <code>play</code>
+function works for a large number of different inputs. Failing this test means
+something is wrong, but you should look at other tests to see where the
+problem might be.</p>
+
+<p><em>Hint</em>: If you fail the fuzz test, check that you're only calling <code>take_turn</code>
+once per turn!</p></blockquote>
+
+<p>Once you are finished, you will be able to play a graphical version of
+the game. We have provided a file called <code>hog_gui.py</code> that
+you can run from the terminal:</p>
+
+<pre><code class="hljs">python3 hog_gui.py</code></pre>
+
+<p>If you don't already have Tkinter (Python's graphics library)
+installed, you'll need to install it first before you can run the GUI.</p>
+
+<p>The GUI relies on your implementation, so if you have any bugs in your
+code, they will be reflected in the GUI. This means you can also use
+the GUI as a debugging tool; however, it's better to run the tests
+first.</p>
+
+<p>Congratulations! You have finished Phase 1 of this project!</p>
+
+
+<h2 id="phase-2-strategies">Phase 2: Strategies</h2>
+
+
+<p>In the second phase, you will experiment with ways to improve upon the basic
+strategy of always rolling a fixed number of dice. First, you need to develop
+some tools to evaluate strategies.</p>
+
+
+<h3 id="problem-6-1-pt">Problem 6 (1 pt)</h3>
+
+
+<p>Implement the <code>check_strategy</code> function , which takes a strategy function as an
+argument and returns <code>None</code>. It calls the strategy with all valid inputs and
+verifies that the strategy always returns a valid output. Use the provided
+<code>check_strategy_roll</code> function to raise an error with a helpful message if
+<code>num_rolls</code> is an invalid output.</p>
+
+<p>Before writing any code, unlock the tests to verify your understanding of the question.</p>
+<pre><code class="hljs">python3 ok -q 06 -u</code></pre>
+<p>Once you are done unlocking, begin implementing your solution. You can check your correctness with:</p>
+<pre><code class="hljs">python3 ok -q 06</code></pre>
+
+
+<h3 id="problem-7-2-pt">Problem 7 (2 pt)</h3>
+
+
+<p>Implement the <code>make_averaged</code> function, which is a higher-order function that
+takes a function <code>fn</code> as an argument. It returns another function that takes
+the same number of arguments as <code>fn</code> (the function originally passed into
+<code>make_averaged</code>). This returned function differs from the input function in that
+it returns the average value of repeatedly calling <code>fn</code> on the same arguments.
+This function should call <code>fn</code> a total of <code>num_samples</code> times and return the
+average of the results.</p>
+
+<p>To implement this function, you need a new piece of Python syntax! You
+must write a function that accepts an arbitrary number of arguments,
+then calls another function using exactly those arguments. Here's how
+it works.</p>
+
+<p>Instead of listing formal parameters for a function, we write <code>*args</code>.
+To call another function using exactly those arguments, we call it
+again with <code>*args</code>. For example,</p>
+
+<pre><code class="hljs python"><span class="hljs-prompt">&gt;&gt;&gt; </span><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">printed</span><span class="hljs-params">(fn)</span>:</span>
+<span class="hljs-prompt">... </span>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">print_and_return</span><span class="hljs-params">(*args)</span>:</span>
+<span class="hljs-prompt">... </span>        result = fn(*args)
+<span class="hljs-prompt">... </span>        print(<span class="hljs-string">'Result:'</span>, result)
+<span class="hljs-prompt">... </span>        <span class="hljs-keyword">return</span> result
+<span class="hljs-prompt">... </span>    <span class="hljs-keyword">return</span> print_and_return
+<span class="hljs-prompt">&gt;&gt;&gt; </span>printed_pow = printed(pow)
+<span class="hljs-prompt">&gt;&gt;&gt; </span>printed_pow(<span class="hljs-number">2</span>, <span class="hljs-number">8</span>)
+Result: <span class="hljs-number">256</span>
+<span class="hljs-number">256</span>
+<span class="hljs-prompt">&gt;&gt;&gt; </span>printed_abs = printed(abs)
+<span class="hljs-prompt">&gt;&gt;&gt; </span>printed_abs(-<span class="hljs-number">10</span>)
+Result: <span class="hljs-number">10</span>
+<span class="hljs-number">10</span></code></pre>
+
+<p>Read the docstring for <code>make_averaged</code> carefully to understand how it
+is meant to work.</p>
+
+<p>Before writing any code, unlock the tests to verify your understanding of the question.</p>
+<pre><code class="hljs">python3 ok -q 07 -u</code></pre>
+<p>Once you are done unlocking, begin implementing your solution. You can check your correctness with:</p>
+<pre><code class="hljs">python3 ok -q 07</code></pre>
+
+
+<h3 id="problem-8-1-pt">Problem 8 (1 pt)</h3>
+
+
+<p>Implement the <code>max_scoring_num_rolls</code> function, which runs an
+experiment to determine the number of rolls (from 1 to 10) that gives
+the maximum average score for a turn.  Your implementation should use
+<code>make_averaged</code> and <code>roll_dice</code>.</p>
+
+<p>If two numbers of rolls are tied for the maximum average score, return the lower
+number. For example, if both 3 and 6 achieve a maximum average score, return 3.</p>
+
+<p>Before writing any code, unlock the tests to verify your understanding of the question.</p>
+<pre><code class="hljs">python3 ok -q 08 -u</code></pre>
+<p>Once you are done unlocking, begin implementing your solution. You can check your correctness with:</p>
+<pre><code class="hljs">python3 ok -q 08</code></pre>
+
+<p>To run this experiment on randomized dice, call <code>run_experiments</code> using
+the <code>-r</code> option:</p>
+
+<pre><code class="hljs">python3 hog.py -r</code></pre>
+
+<p><strong>Running experiments</strong> For the remainder of this project,
+you can change the implementation of <code>run_experiments</code> as you wish.
+By calling <code>average_win_rate</code>, you can evaluate various Hog
+strategies. For example, change the first <code>if False:</code> to <code>if
+True:</code> in order to evaluate <code>always_roll(8)</code> against the
+baseline strategy of <code>always_roll(4)</code>.  You should find that it loses
+more often than it wins, giving a win rate below 0.5.</p>
+
+<p>Some of the experiments may take up to a minute to run. You can always reduce
+the number of samples in <code>make_averaged</code> to speed up experiments.</p>
+
+
+<h3 id="problem-9-1-pt">Problem 9 (1 pt)</h3>
+
+
+<p>A strategy can take advantage of the <em>Free Bacon</em> rule by rolling 0 when it is
+most beneficial to do so. Implement <code>bacon_strategy</code>, which returns 0 whenever
+rolling 0 would give <strong>at least</strong> <code>margin</code> points and returns <code>num_rolls</code>
+otherwise. Don't forget about the Hogtimus Prime rule!</p>
+
+<p>Before writing any code, unlock the tests to verify your understanding of the question.</p>
+<pre><code class="hljs">python3 ok -q 09 -u</code></pre>
+<p>Once you are done unlocking, begin implementing your solution. You can check your correctness with:</p>
+<pre><code class="hljs">python3 ok -q 09</code></pre>
+
+<p>Once you have implemented this strategy, change <code>run_experiments</code> to evaluate
+your new strategy against the baseline. You should find that it wins more than
+half of the time.</p>
+
+
+<h3 id="problem-10-2-pt">Problem 10 (2 pt)</h3>
+
+
+<p>A strategy can also take advantage of the <em>Swine Swap</em> rule. The <code>swap_strategy</code>
+rolls 0 if it would cause a beneficial swap. It also returns 0 if rolling 0
+would give <strong>at least</strong> <code>margin</code> points and would not cause a
+swap. Otherwise, the strategy rolls <code>num_rolls</code>.</p>
+
+<p>Before writing any code, unlock the tests to verify your understanding of the question.</p>
+<pre><code class="hljs">python3 ok -q 10 -u</code></pre>
+<p>Once you are done unlocking, begin implementing your solution. You can check your correctness with:</p>
+<pre><code class="hljs">python3 ok -q 10</code></pre>
+
+<p>Once you have implemented this strategy, update <code>run_experiments</code> to
+evaluate your new strategy against the baseline.  You should find that
+it gives a significant edge over <code>always_roll(4)</code>.</p>
+
+
+<h3 id="problem-11-3-pt">Problem 11 (3 pt)</h3>
+
+
+<p>Implement <code>final_strategy</code>, which combines these ideas and any other ideas you
+have to achieve a win rate of at least 0.80 (for full credit) against the
+baseline <code>always_roll(4)</code> strategy.  Partial credit is also given if you are
+close. Some suggestions:</p>
+
+<ul>
+  <li><code>swap_strategy</code> is a good default strategy to start with.</li>
+  <li>There's no point in scoring more than 100. Check for chances to win. If you are in the lead, you might take fewer risks.</li>
+  <li>Try to force a beneficial swap.</li>
+  <li>Choose the <code>num_rolls</code> and <code>margin</code> arguments carefully. If Hog Wild is in
+  effect, you may want to have a different <code>num_rolls</code> and <code>margin</code>.</li>
+  <li>It can be advantageous to avoid giving the re-rolled dice to your opponent.</li>
+  <li>Take full advantage of the Pork Chop rule.</li>
+</ul>
+
+<p>You can check your final strategy win rate by running OK.</p>
+
+<pre><code class="hljs">python3 ok -q 11</code></pre>
+
+<p>At this point, run the entire autograder to see if there are any tests
+that don't pass.</p>
+
+<pre><code class="hljs">python3 ok</code></pre>
+
+<p>You can also play against your final strategy with the graphical user
+interface:</p>
+
+<pre><code class="hljs bash">python3 hog_gui.py <span class="hljs-operator">-f</span></code></pre>
+
+<p>The GUI will alternate which player is controlled by you.</p>
+
+<p>Congratulations, you have reached the end of your first CS 61A project!</p>
+
+  </div>
+
+  <div class="col-md-3">
+    <nav class="hidden-print hidden-sm hidden-xs sidebar">
+      <ul class="nav nav-stacked">
+  <li><a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/proj/hog/#download-starter-files">Download starter files</a></li>
+  <li><a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/proj/hog/#graphical-user-interface">Graphical User Interface</a></li>
+  <li><a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/proj/hog/#phase-1-simulator">Phase 1: Simulator</a></li>
+  <ul class="nav nav-stacked">
+    <li><a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/proj/hog/#problem-0-0-pt">Problem 0 (0 pt)</a></li>
+    <li><a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/proj/hog/#problem-1-1-pt">Problem 1 (1 pt)</a></li>
+    <li><a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/proj/hog/#problem-2-2-pt">Problem 2 (2 pt)</a></li>
+    <li><a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/proj/hog/#problem-3-1-pt">Problem 3 (1 pt)</a></li>
+    <li><a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/proj/hog/#problem-4-1-pt">Problem 4 (1 pt)</a></li>
+    <li class="active"><a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/proj/hog/#problem-5-3-pt">Problem 5 (3 pt)</a></li>
+  </ul>
+  <li class=""><a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/proj/hog/#phase-2-strategies">Phase 2: Strategies</a></li>
+  <ul class="nav nav-stacked">
+    <li class=""><a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/proj/hog/#problem-6-1-pt">Problem 6 (1 pt)</a></li>
+    <li><a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/proj/hog/#problem-7-2-pt">Problem 7 (2 pt)</a></li>
+    <li><a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/proj/hog/#problem-8-1-pt">Problem 8 (1 pt)</a></li>
+    <li><a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/proj/hog/#problem-9-1-pt">Problem 9 (1 pt)</a></li>
+    <li><a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/proj/hog/#problem-10-2-pt">Problem 10 (2 pt)</a></li>
+    <li><a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/proj/hog/#problem-11-3-pt">Problem 11 (3 pt)</a></li>
+  </ul>
+</ul>
+    </nav>
+  </div>
+
+</div>
+
+    </div>
+    
+
+
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+</script>
+
+<script src="./Project 1_ The Game of Hog _ CS 61A Fall 2016_files/jquery-latest.js"></script>
+<script>
+  $(function() {
+    $('h2').click(function() {
+      var h2_id = $(this).text().toLowerCase().replace(/ |:()/g, '-'),
+          section = $(this).nextUntil('h2'),
+          div_selector = 'div.' + h2_id,
+          wrap_tag = '<div class="' + h2_id + '"/>';
+      if (section.length > 1 && !$(section[0]).is(div_selector)) {
+        section.wrapAll(wrap_tag);
+      }
+      $(div_selector).slideToggle(600);
+    });
+  });
+</script>
+
+  
+</body></html>

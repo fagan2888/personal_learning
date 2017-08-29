@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<!-- saved from url=(0051)https://inst.eecs.berkeley.edu/~cs61a/fa16/hw/hw03/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="description" content="CS61A: Structure and Interpretation of Computer Programs">
+    <meta name="keywords" content="CS61A, Computer Science, CS, 61A, Programming, John DeNero, Berkeley, EECS">
+    <meta name="author" content="John DeNero, Albert Chen, Anna (Zhining) Zhu, Cale Horeff, Christopher Le, Colin Schoen, David Harrison, Emily Tsai, Eric Bo, Eric Nelson, Eric Pai, Eurie Oh, Garrett Tan, Giorgia Willits, Haojun Li, Jack Thakar, James Uejio, Jerry Chen, Jongmin Baek, Jordon Wing, Katya Stukalova, Kavi Gupta, Kelly Liu, Kevin Chen, Kevin Lin, Kunal Munshani, Kyle Liang, Kyle Raftogianis, Manas Agrawal, Michael Dong, Michelle Tian, Mitas Ray, Nicole Rasquinha, Owen Jow, Peter Xu, Raymond Chan, Richard Liang, Rohit Lalchandani, Ryan Chang, Samantha Wathugala, Samantha Wong, Shea Conlon, Soumik Biswas, Stanfield Chu, Sydney McMuldroch, Tammy Nguyen, Tim Greeno, Vivian Fang, Zhen Qin">
+    
+    <meta name="viewport" content="width=device-width">
+
+    <script src="./Homework3_instructions_files/jquery.min.js"></script>
+    <script src="./Homework3_instructions_files/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="./Homework3_instructions_files/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./Homework3_instructions_files/style.css">
+    <link rel="icon" href="https://inst.eecs.berkeley.edu/~cs61a/fa16/assets/images/favicon.ico">
+
+    <link rel="stylesheet" href="./Homework3_instructions_files/mono-blue.css">
+    <script src="./Homework3_instructions_files/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+
+
+<link rel="stylesheet" type="text/css" href="./Homework3_instructions_files/resource.css">
+
+<link rel="stylesheet" type="text/css" href="./Homework3_instructions_files/hw.css">
+
+
+    <title>
+Homework 3 | CS 61A Fall 2016
+</title>
+
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="https://inst.eecs.berkeley.edu/~cs61a/fa16/">CS 61A</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/articles/about.html">Syllabus</a></li>
+            <li><a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/articles/resources.html">Resources</a></li>
+            <li><a href="https://piazza.com/berkeley/fall2016/cs61a">Piazza</a></li>
+            <li><a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/office-hours.html">Office Hours</a></li>
+            <li><a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/weekly.html">Weekly Schedule</a></li>
+            <li><a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/staff.html">Staff</a></li>
+            <!--- <li><a href="/~cs61a/fa16/articles/using-ok.html">Using OK</a></li> -->
+            <!-- Not used, but leaving these for the future. -->
+            <!--- <li><a href="https://inst.eecs.berkeley.edu/~cs61a/admin-sp16/cgi-bin/calnet-auth.cgi">Account Login</a></li> -->
+            <!---
+            <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Course Info <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="/~cs61a/fa16/articles/resources.html">Resources</a></li>
+              <li><a href="/~cs61a/fa16/staff.html">Staff</a></li>
+              <li><a href="/~cs61a/fa16/weekly.html">Weekly Schedule</a></li>
+            </ul>
+            </li>
+            -->
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div id="content" class="container">
+      
+
+<div class="row">
+  <div class="col-md-9">
+    <div class="page-header">
+      <h1>
+<span class="content-title-brand">Homework 3</span>
+</h1>
+    </div>
+
+    
+<p><em>Due by 11:59pm on Tuesday, 9/13</em></p>
+
+
+
+
+<h2>Instructions</h2>
+
+<p>Download <a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/hw/hw03/hw03.zip">hw03.zip</a>.
+The vitamin problems can be found in the <code>vitamin</code> directory and the homework problems can be found in the <code>problems</code> directory. You must run
+<code>python3 ok --submit</code> twice: once inside the <code>vitamin</code> directory, and once
+inside the <code>problems</code> directory.</p>
+
+<p><strong>Submission:</strong> When you are done, submit with
+<code>python3 ok --submit</code>.
+You may submit more than once before the deadline; only the final submission
+will be scored. Check that you have successfully submitted your code on
+<a href="https://okpy.org/">okpy.org</a>.
+See <a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/lab/lab00#submitting-assignments">Lab 0</a>
+for more instructions on submitting assignments.</p>
+
+<p><strong>Using OK:</strong> If you have any questions about using OK, please
+refer to <a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/articles/using-ok.html">this guide.</a>
+
+
+  </p><p><strong>Readings:</strong> You might find the following references
+  useful:</p>
+  <ul>
+  <li><a href="http://composingprograms.com/pages/16-higher-order-functions.html">Section 1.6</a></li>
+  <li><a href="http://composingprograms.com/pages/16-higher-order-functions.html">Section 1.7</a></li>
+</ul>
+
+
+
+
+
+    
+<p>Several doctests use the <code>construct_check</code> module, which defines a
+function <code>check</code>.  For example, a call such as</p>
+
+<pre><code class="hljs bash">check(<span class="hljs-string">"foo.py"</span>, <span class="hljs-string">"func1"</span>, [<span class="hljs-string">"While"</span>, <span class="hljs-string">"For"</span>, <span class="hljs-string">"Recursion"</span>])</code></pre>
+
+<p>checks that the function <code>func1</code> in file <code>foo.py</code> does <em>not</em> contain
+any <code>while</code> or <code>for</code> constructs, and is not an overtly recursive function (i.e.,
+one in which a function contains a call to itself by name.)</p>
+
+
+<h2 id="vitamins">Vitamins</h2>
+
+<p>For this set of problems, you must run <code>ok</code> from within the <code>vitamin</code> directory.
+While homework questions may be completed with a partner, please remember that
+<strong>vitamin questions must be completed alone.</strong></p>
+
+<h3 class="question" id="q1">Question 1: Has Seven</h3>
+
+<p>Write a function <code>has_seven</code> that takes a positive integer <code>n</code> and
+returns whether <code>n</code> contains the digit 7.  <em>Do not use any assignment
+statements - use recursion instead</em>:</p>
+
+<solution>
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">has_seven</span><span class="hljs-params">(k)</span>:</span>
+    <span class="hljs-string">"""Returns True if at least one of the digits of k is a 7, False otherwise.
+
+    &gt;&gt;&gt; has_seven(3)
+    False
+    &gt;&gt;&gt; has_seven(7)
+    True
+    &gt;&gt;&gt; has_seven(2734)
+    True
+    &gt;&gt;&gt; has_seven(2634)
+    False
+    &gt;&gt;&gt; has_seven(734)
+    True
+    &gt;&gt;&gt; has_seven(7777)
+    True
+    """</span>
+    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</code></pre>
+
+</solution>
+
+<p>Use OK to test your code:</p><pre><code class="nohighlight">python3 ok -q has_seven</code></pre>
+<h3 class="question" id="q2">Question 2: Summation</h3>
+
+<p>Write a recursive implementation of <code>summation</code>, which takes a positive integer
+<code>n</code> and a function <code>term</code>. It applies <code>term</code> to every number from <code>1</code> to <code>n</code>
+including <code>n</code> and returns the sum of the results.</p>
+
+<solution>
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">summation</span><span class="hljs-params">(n, term)</span>:</span>
+
+    <span class="hljs-string">"""Return the sum of the first n terms in the sequence defined by term.
+    Implement using recursion!
+
+    &gt;&gt;&gt; summation(5, lambda x: x * x * x) # 1^3 + 2^3 + 3^3 + 4^3 + 5^3
+    225
+    &gt;&gt;&gt; summation(9, lambda x: x + 1) # 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10
+    54
+    &gt;&gt;&gt; summation(5, lambda x: 2**x) # 2^1 + 2^2 + 2^3 + 2^4 + 2^5
+    62
+    &gt;&gt;&gt; # Do not use while/for loops!
+    &gt;&gt;&gt; from construct_check import check
+    &gt;&gt;&gt; check(HW_SOURCE_FILE, 'summation',
+    ...       ['While', 'For'])
+    True
+    """</span>
+    <span class="hljs-keyword">assert</span> n &gt;= <span class="hljs-number">1</span>
+    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</code></pre>
+
+</solution>
+
+<p>Use OK to test your code:</p><pre><code class="nohighlight">python3 ok -q summation</code></pre>
+
+
+<h2 id="required-questions">Required questions</h2>
+
+<p>For this set of problems, you must run <code>ok</code> from within the <code>problems</code>
+directory. Remember that you may choose to work with a partner on homework
+questions.</p>
+
+<p>Several doctests refer to these one-argument functions:</p>
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">square</span><span class="hljs-params">(x)</span>:</span>
+    <span class="hljs-keyword">return</span> x * x
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">triple</span><span class="hljs-params">(x)</span>:</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">3</span> * x
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">identity</span><span class="hljs-params">(x)</span>:</span>
+    <span class="hljs-keyword">return</span> x
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">increment</span><span class="hljs-params">(x)</span>:</span>
+    <span class="hljs-keyword">return</span> x + <span class="hljs-number">1</span></code></pre>
+
+<h3 class="question" id="q3">Question 3: Accumulate</h3>
+
+<p>Show that both <code>summation</code> and <code>product</code> are instances of a more
+general function, called <code>accumulate</code>:</p>
+
+<pre><code class="hljs python"><span class="hljs-keyword">from</span> operator <span class="hljs-keyword">import</span> add, mul
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">accumulate</span><span class="hljs-params">(combiner, base, n, term)</span>:</span>
+    <span class="hljs-string">"""Return the result of combining the first n terms in a sequence and base.
+    The terms to be combined are term(1), term(2), ..., term(n).  combiner is a
+    two-argument commutative function.
+
+    &gt;&gt;&gt; accumulate(add, 0, 5, identity)  # 0 + 1 + 2 + 3 + 4 + 5
+    15
+    &gt;&gt;&gt; accumulate(add, 11, 5, identity) # 11 + 1 + 2 + 3 + 4 + 5
+    26
+    &gt;&gt;&gt; accumulate(add, 11, 0, identity) # 11
+    11
+    &gt;&gt;&gt; accumulate(add, 11, 3, square)   # 11 + 1^2 + 2^2 + 3^2
+    25
+    &gt;&gt;&gt; accumulate(mul, 2, 3, square)   # 2 * 1^2 * 2^2 * 3^2
+    72
+    """</span>
+    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</code></pre>
+
+<p><code>accumulate(combiner, base, n, term)</code> takes the following arguments:</p>
+
+<ul>
+  <li><code>term</code> and <code>n</code>: the same arguments as in <code>summation</code> and <code>product</code></li>
+  <li><code>combiner</code>: a two-argument function that specifies how the current term
+  combined with the previously accumulated terms. You may assume that <code>combiner</code>
+  is commutative, i.e., <code>combiner(a, b) = combiner(b, a)</code>.</li>
+  <li><code>base</code>: value that specifies what value to use to start the accumulation.</li>
+</ul>
+
+<p>For example, <code>accumulate(add, 11, 3, square)</code> is</p>
+
+<pre><code class="hljs">11 + square(1) + square(2) + square(3)</code></pre>
+
+<p>Implement <code>accumulate</code> and show how <code>summation</code> and <code>product</code> can both be
+defined as simple calls to <code>accumulate</code>:</p>
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">summation_using_accumulate</span><span class="hljs-params">(n, term)</span>:</span>
+    <span class="hljs-string">"""Returns the sum of term(1) + ... + term(n). The implementation
+    uses accumulate.
+
+    &gt;&gt;&gt; summation_using_accumulate(5, square)
+    55
+    &gt;&gt;&gt; summation_using_accumulate(5, triple)
+    45
+    &gt;&gt;&gt; from construct_check import check
+    &gt;&gt;&gt; check(HW_SOURCE_FILE, 'summation_using_accumulate',
+    ...       ['Recursion', 'For', 'While'])
+    True
+    """</span>
+    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+    <span class="hljs-keyword">return</span> _______
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">product_using_accumulate</span><span class="hljs-params">(n, term)</span>:</span>
+    <span class="hljs-string">"""An implementation of product using accumulate.
+
+    &gt;&gt;&gt; product_using_accumulate(4, square)
+    576
+    &gt;&gt;&gt; product_using_accumulate(6, triple)
+    524880
+    &gt;&gt;&gt; from construct_check import check
+    &gt;&gt;&gt; check(HW_SOURCE_FILE, 'product_using_accumulate',
+    ...       ['Recursion', 'For', 'While'])
+    True
+    """</span>
+    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+    <span class="hljs-keyword">return</span> _______
+</code></pre>
+
+<p>Use OK to test your code:</p><pre><code class="nohighlight">python3 ok -q accumulate
+python3 ok -q summation_using_accumulate
+python3 ok -q product_using_accumulate</code></pre>
+<h3 class="question" id="q4">Question 4: Filtered Accumulate</h3>
+
+<p>Show how to extend the <code>accumulate</code> function to allow for <em>filtering</em> the
+results produced by its <code>term</code> argument, by implementing the
+<code>filtered_accumulate</code> function in terms of <code>accumulate</code>:</p>
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">filtered_accumulate</span><span class="hljs-params">(combiner, base, pred, n, term)</span>:</span>
+    <span class="hljs-string">"""Return the result of combining the terms in a sequence of N terms
+    that satisfy the predicate PRED.  COMBINER is a two-argument function.
+    If v1, v2, ..., vk are the values in TERM(1), TERM(2), ..., TERM(N)
+    that satisfy PRED, then the result is
+         BASE COMBINER v1 COMBINER v2 ... COMBINER vk
+    (treating COMBINER as if it were a binary operator, like +). The
+    implementation uses accumulate.
+
+    &gt;&gt;&gt; filtered_accumulate(add, 0, lambda x: True, 5, identity)  # 0 + 1 + 2 + 3 + 4 + 5
+    15
+    &gt;&gt;&gt; filtered_accumulate(add, 11, lambda x: False, 5, identity) # 11
+    11
+    &gt;&gt;&gt; filtered_accumulate(add, 0, odd, 5, identity)   # 0 + 1 + 3 + 5
+    9
+    &gt;&gt;&gt; filtered_accumulate(mul, 1, greater_than_5, 5, square)  # 1 * 9 * 16 * 25
+    3600
+    &gt;&gt;&gt; # Do not use while/for loops or recursion
+    &gt;&gt;&gt; from construct_check import check
+    &gt;&gt;&gt; check(HW_SOURCE_FILE, 'filtered_accumulate',
+    ...       ['While', 'For', 'Recursion'])
+    True
+    """</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">combine_if</span><span class="hljs-params">(x, y)</span>:</span>
+        <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+    <span class="hljs-keyword">return</span> accumulate(combine_if, base, n, term)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">odd</span><span class="hljs-params">(x)</span>:</span>
+    <span class="hljs-keyword">return</span> x % <span class="hljs-number">2</span> == <span class="hljs-number">1</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">greater_than_5</span><span class="hljs-params">(x)</span>:</span>
+    <span class="hljs-keyword">return</span> x &gt; <span class="hljs-number">5</span></code></pre>
+
+<p><code>filtered_accumulate(combiner, base, pred, n, term)</code> takes
+the following arguments:</p>
+
+<ul>
+  <li><code>combiner</code>, <code>base</code>, <code>term</code> and <code>n</code>: the same arguments as <code>accumulate</code>.</li>
+  <li><code>pred</code>: a one-argument predicate function applied to the values of <code>term(k)</code>,
+  <code>k</code> from 1 to <code>n</code>. Only values for which <code>pred</code> returns a true value are
+  combined to form the result.  If no values satisfy <code>pred</code>, then <code>base</code> is
+  returned.</li>
+</ul>
+
+<p>For example, <code>filtered_accumulate(add, 0, is_prime, 11, identity)</code> would be</p>
+
+<pre><code class="hljs">0 + 2 + 3 + 5 + 7 + 11</code></pre>
+
+<p>for a suitable definition of <code>is_prime</code>.</p>
+
+<p>Implement <code>filtered_accumulate</code> by defining the <code>combine_if</code> function. Exactly
+what this function does is something for you to discover. Do not write any
+loops or recursive calls to <code>filtered_accumulate</code>.</p>
+
+<p>Use OK to test your code:</p><pre><code class="nohighlight">python3 ok -q filtered_accumulate</code></pre>
+
+<h3 class="question" id="q5">Question 5: Repeated</h3>
+
+<p>Previously, you implemented the function <code>repeated(f, n, x)</code>, where:</p>
+
+<ul>
+  <li><code>f</code> was a one-argument function</li>
+  <li><code>n</code> was a non-negative integer</li>
+  <li><code>x</code> was an argument for <code>f</code></li>
+</ul>
+
+<p><code>repeated(f, n, x)</code> returned the result of composing <code>f</code> <code>n</code> times on <code>x</code>, i.e.,
+<code>f(f(...f(x)...))</code>. Now let's write a higher-order version of this function,
+<code>repeated(f, n)</code>.</p>
+
+<p>The new <code>repeated</code>, instead of returning the result directly, returns function
+that, when given the argument <code>x</code>, will compute <code>f(f(...f(x)...))</code>. For example,
+<code>repeated(square, 3)(42)</code> evaluates to <code>square(square(square(42)))</code>.  Yes, it
+makes sense to apply the function zero times!  See if you can figure out a
+reasonable function to return for that case.</p>
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">repeated</span><span class="hljs-params">(f, n)</span>:</span>
+    <span class="hljs-string">"""Return the function that computes the nth application of f.
+
+    &gt;&gt;&gt; add_three = repeated(increment, 3)
+    &gt;&gt;&gt; add_three(5)
+    8
+    &gt;&gt;&gt; repeated(triple, 5)(1) # 3 * 3 * 3 * 3 * 3 * 1
+    243
+    &gt;&gt;&gt; repeated(square, 2)(5) # square(square(5))
+    625
+    &gt;&gt;&gt; repeated(square, 4)(5) # square(square(square(square(5))))
+    152587890625
+    &gt;&gt;&gt; repeated(square, 0)(5)
+    5
+    """</span>
+    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</code></pre>
+
+<blockquote><p>For an extra challenge, try defining <code>repeated</code> using <code>compose1</code> and
+<code>accumulate</code> in a single one-line return statement.</p></blockquote>
+
+<p>Use OK to test your code:</p><pre><code class="nohighlight">python3 ok -q repeated</code></pre>
+
+
+
+
+<h2 id="extra-questions">Extra questions</h2>
+
+
+<blockquote><p>Extra questions are not worth extra credit and are entirely optional. They
+are designed to challenge you to think creatively!</p></blockquote>
+
+<h3 class="question" id="q6">Question 6: Quine</h3>
+
+<p>Write a one-line program that prints itself, using only the following features
+of the Python language:</p>
+
+<ul>
+  <li>Number literals</li>
+  <li>Assignment statements</li>
+  <li>String literals that can be expressed using single or double quotes</li>
+  <li>The arithmetic operators <code>+</code>, <code>-</code>, <code>*</code>, and <code>/</code></li>
+  <li>The built-in <code>print</code> function</li>
+  <li>The built-in <code>eval</code> function, which evaluates a string as a Python expression</li>
+  <li>The built-in <code>repr</code> function, which returns an expression that evaluates to its argument</li>
+</ul>
+
+<p>You can concatenate two strings by adding them together with <code>+</code> and repeat a
+string by multipying it by an integer. Semicolons can be used to separate
+multiple statements on the same line. E.g.,</p>
+
+<pre><code class="hljs python"><span class="hljs-prompt">&gt;&gt;&gt; </span>c=<span class="hljs-string">'c'</span>;print(<span class="hljs-string">'a'</span>);print(<span class="hljs-string">'b'</span> + c * <span class="hljs-number">2</span>)
+a
+bcc</code></pre>
+
+<p>Hint: Explore the relationship between single quotes, double quotes, and the
+<code>repr</code> function applied to strings.</p>
+
+<p>A program that prints itself is called a Quine. Place your solution in the multi-line string named <code>quine</code>.</p>
+
+<p><em>Note</em>: No tests will be run on your solution to this problem.</p>
+
+<h3 class="question" id="q7">Question 7: Church numerals</h3>
+
+<p>The logician Alonzo Church invented a system of representing non-negative
+integers entirely using functions. The purpose was to show that functions are
+sufficient to describe all of number theory: if we have functions, we do not
+need to assume that numbers exist, but instead we can invent them.</p>
+
+<p>Your goal in this problem is to rediscover this representation known as <em>Church
+numerals</em>. Here are the definitions of <code>zero</code>, as well as a function that
+returns one more than its argument:</p>
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">zero</span><span class="hljs-params">(f)</span>:</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">lambda</span> x: x
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">successor</span><span class="hljs-params">(n)</span>:</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">lambda</span> f: <span class="hljs-keyword">lambda</span> x: f(n(f)(x))</code></pre>
+
+<p>First, define functions <code>one</code> and <code>two</code> such that they have the same behavior
+as <code>successor(zero)</code> and <code>successsor(successor(zero))</code> respectively, but <em>do
+not call <code>successor</code> in your implementation</em>.</p>
+
+<p>Next, implement a function <code>church_to_int</code> that converts a church numeral
+argument to a regular Python integer.</p>
+
+<p>Finally, implement functions <code>add_church</code>, <code>mul_church</code>, and <code>pow_church</code> that
+perform addition, multiplication, and exponentiation on church numerals.</p>
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">one</span><span class="hljs-params">(f)</span>:</span>
+    <span class="hljs-string">"""Church numeral 1: same as successor(zero)"""</span>
+    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">two</span><span class="hljs-params">(f)</span>:</span>
+    <span class="hljs-string">"""Church numeral 2: same as successor(successor(zero))"""</span>
+    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+
+three = successor(two)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">church_to_int</span><span class="hljs-params">(n)</span>:</span>
+    <span class="hljs-string">"""Convert the Church numeral n to a Python integer.
+
+    &gt;&gt;&gt; church_to_int(zero)
+    0
+    &gt;&gt;&gt; church_to_int(one)
+    1
+    &gt;&gt;&gt; church_to_int(two)
+    2
+    &gt;&gt;&gt; church_to_int(three)
+    3
+    """</span>
+    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">add_church</span><span class="hljs-params">(m, n)</span>:</span>
+    <span class="hljs-string">"""Return the Church numeral for m + n, for Church numerals m and n.
+
+    &gt;&gt;&gt; church_to_int(add_church(two, three))
+    5
+    """</span>
+    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">mul_church</span><span class="hljs-params">(m, n)</span>:</span>
+    <span class="hljs-string">"""Return the Church numeral for m * n, for Church numerals m and n.
+
+    &gt;&gt;&gt; four = successor(three)
+    &gt;&gt;&gt; church_to_int(mul_church(two, three))
+    6
+    &gt;&gt;&gt; church_to_int(mul_church(three, four))
+    12
+    """</span>
+    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">pow_church</span><span class="hljs-params">(m, n)</span>:</span>
+    <span class="hljs-string">"""Return the Church numeral m ** n, for Church numerals m and n.
+
+    &gt;&gt;&gt; church_to_int(pow_church(two, three))
+    8
+    &gt;&gt;&gt; church_to_int(pow_church(three, two))
+    9
+    """</span>
+    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</code></pre>
+
+<p>Use OK to test your code:</p><pre><code class="nohighlight">python3 ok -q church_to_int
+python3 ok -q add_church
+python3 ok -q mul_church
+python3 ok -q pow_church</code></pre>
+
+
+
+  </div>
+
+  <div class="col-md-3">
+    <nav class="hidden-print hidden-sm hidden-xs sidebar">
+      <ul class="nav nav-stacked">
+  <li><a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/hw/hw03/#vitamins">Vitamins</a></li>
+  <ul class="nav nav-stacked">
+    <li><a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/hw/hw03/#q1">Question 1: Has Seven</a></li>
+    <li><a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/hw/hw03/#q2">Question 2: Summation</a></li>
+  </ul>
+  <li><a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/hw/hw03/#required-questions">Required questions</a></li>
+  <ul class="nav nav-stacked">
+    <li><a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/hw/hw03/#q3">Question 3: Accumulate</a></li>
+    <li><a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/hw/hw03/#q4">Question 4: Filtered Accumulate</a></li>
+    <li><a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/hw/hw03/#q5">Question 5: Repeated</a></li>
+  </ul>
+  <li><a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/hw/hw03/#extra-questions">Extra questions</a></li>
+  <ul class="nav nav-stacked">
+    <li><a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/hw/hw03/#q6">Question 6: Quine</a></li>
+    <li><a href="https://inst.eecs.berkeley.edu/~cs61a/fa16/hw/hw03/#q7">Question 7: Church numerals</a></li>
+  </ul>
+</ul>
+    </nav>
+  </div>
+
+</div>
+
+    </div>
+    
+
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+</script>
+
+  
+</body></html>
